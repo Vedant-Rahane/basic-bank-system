@@ -1,0 +1,90 @@
+html {
+    font-family: "Montserrat", sans-serif;
+  }
+  body {
+    background: #e4fbff;
+    padding: 0 16px;
+    background-image: url("https://www.transparenttextures.com/patterns/connected.png");
+  }
+  
+  header {
+    background-color: #0b85ea;
+    margin: auto -16px;
+    padding: 10px 32px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  }
+  
+  header h1 {
+    color: #fff;
+    font-family: "McLaren", cursive;
+    font-weight: 200;
+  }
+
+.home-body {
+  position: relative;
+}
+
+.home-animation {
+  height: 680px;
+    position: absolute;
+    left: 0;
+    top: -80px;
+}
+
+.btn-home {
+  position: absolute;
+  right: 200px;
+  top: 200px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.icon {
+  padding: 30px;
+  color: #000;
+  font-size: 50px;
+}
+
+.allUsersBody {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.allUsersBody h1 {
+  text-align: center;
+}
+
+.styled-table {
+  /* text-align: center; */
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 1.5em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 18px 50px;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
