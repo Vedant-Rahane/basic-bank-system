@@ -1,0 +1,122 @@
+
+body {
+    background: #e4fbff;
+    box-sizing: border-box;
+    padding: 0;
+    background-image: url("https://www.transparenttextures.com/patterns/connected.png");
+  }
+
+.user-detail-container {
+    min-height: 100vh;
+    place-items: center;
+  }
+  
+  .section {
+    width: 90vw;
+    margin: 0 auto;
+    max-width: 1170px;
+  }
+  
+  .title {
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  .underline {
+    height: 0.25rem;
+    width: 5rem;
+    background: hsl(205, 78%, 60%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .container {
+    width: 80vw;
+    max-width: 620px;
+    margin-bottom: 100px;
+  }
+
+  .user-detail {
+    background: #fff;
+    padding: 1.5rem 2rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s linear;
+    text-align: center;
+  }
+
+  .user-detail:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .img-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+  }
+  .person-img {
+    width: 100%;
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .img-container::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background:  hsl(205, 78%, 60%);
+    position: absolute;
+    top: -0.25rem;
+    right: -0.5rem;
+    border-radius: 50%;
+  }
+
+  .user-table {
+      text-align: left;
+  }
+
+  .transfer-container-btn {
+    margin-top: 0.5rem;
+    background: hsl(205, 100%, 96%);
+    color: hsl(205, 78%, 60%);
+    padding: 0.25rem 0.5rem;
+    text-transform: capitalize;
+    border-radius: 0.25rem;
+    transition: all 0.3s linear;
+    border-color: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+  .transfer-container-btn:hover {
+    background: hsl(205, 78%, 60%);
+    color: hsl(205, 86%, 17%);
+  }
+  .collapse-container {  
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    border-radius: 0.25rem;
+    border: 2px solid #00ff99;
+    transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
+  }
+
+  .collapse-container:hover {
+    padding-left: 12px;
+    border-left: 10px solid #00ff99;
+    /* box-shadow: 0 5px 15px #00ff99; */
+  }
+
+  .transfer-form {
+      text-align: left;
+  }
+
+  .transfer-btn {
+      margin-top: 20px;
+       border: 0;
+  }

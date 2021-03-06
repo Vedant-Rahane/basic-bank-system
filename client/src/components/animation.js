@@ -7,9 +7,9 @@ function animation() {
         data-testid="video"
         width="800"
         height="700"
-        autoPlay="true"
-        loop="true"
-        muted="true"
+        autoPlay={true}
+        loop={true}
+        muted={true}
         poster="true"
       >
         <source

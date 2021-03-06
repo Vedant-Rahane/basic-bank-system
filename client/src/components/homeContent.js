@@ -1,16 +1,16 @@
 import React from "react";
 import Animation from "./animation";
-import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 function homeContent() {
   return (
     <div className="home-body">
       <Animation />
       <div className="btn-home">
-        <i class="icon fas fa-users"></i>
-        <Link to="/allusers">
-          <button className="btn btn-lg btn-primary">View All Users</button>{" "}
-        </Link>
+        <i className="icon fas fa-users"></i>
+        <Button href="/users" variant="outline-primary">
+          View All Users
+        </Button>{" "}
       </div>
     </div>
   );
