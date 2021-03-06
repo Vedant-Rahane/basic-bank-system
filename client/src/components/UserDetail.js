@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../api";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Plastic from "react-plastic";
 import "../css/userDetail.css";
 
 function UserDetail({ match }) {
@@ -33,9 +34,20 @@ function UserDetail({ match }) {
           <div className="underline"></div>
         </div>
         <div className="user-detail">
-          <div className="img-container">
-            <img src={user.image} alt={user.fName} className="person-img" />
-          </div>
+            <div className="top-container">
+              <div className="img-container">
+                <img src={user.image} alt={user.fName} className="person-img" />
+              </div>
+              <div className="card-container">
+              <Plastic
+              type="amex"
+              name={user.fName + " " + user.lName}
+              expiry="10/20"
+              number="444466666655555"
+              cvc="3333"
+            />
+              </div>
+            </div>
           <Table className="user-table">
             <tbody>
               <tr>

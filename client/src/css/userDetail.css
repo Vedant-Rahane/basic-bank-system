@@ -32,8 +32,17 @@ body {
 
   .container {
     width: 80vw;
-    max-width: 620px;
+    max-width: 800px;
     margin-bottom: 100px;
+  }
+
+  .top-container {
+    display:flex; 
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: center;
+    margin: 10px;
+    margin-bottom: 30px;
   }
 
   .user-detail {
@@ -51,15 +60,21 @@ body {
 
   .img-container {
     position: relative;
+    display: inline-block;
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    margin: 0 auto;
-    margin-bottom: 1.5rem;
+    margin: 10px;
   }
+
+  .card-container {
+    margin: 10px;
+    position: relative;
+    display: inline-block;
+  }
+  
   .person-img {
     width: 100%;
-    display: block;
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
