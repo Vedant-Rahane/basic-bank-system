@@ -2,11 +2,9 @@ import React from "react";
 
 function animation() {
   return (
-    <div className="home-animation">
       <video
         data-testid="video"
-        width="800"
-        height="700"
+        className="home-animation"
         autoPlay={true}
         loop={true}
         muted={true}
@@ -17,7 +15,6 @@ function animation() {
           type="video/webm"
         />
       </video>
-    </div>
   );
 }
 

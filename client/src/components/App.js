@@ -4,6 +4,7 @@ import HomeContent from "./homeContent";
 import AllUsers from "./allUsers";
 import UserDetail from "./UserDetail";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Footer from "./Footer";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/users" exact component={AllUsers} />
           <Route path="/user/:id" exact component={UserDetail} />
         </Switch>
+        <Footer />
       </Router>
     </>
   );

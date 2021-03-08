@@ -6,6 +6,20 @@ body {
     background-image: url("https://www.transparenttextures.com/patterns/connected.png");
   }
 
+  #footer .container-fluid{
+    padding: 12px 165px;
+    text-align: center;
+  }
+  
+  footer p {
+    margin: 0;
+    color: #ccc;
+  }
+
+  #alert {
+    margin-bottom: 0.5rem;
+  }
+
 .user-detail-container {
     min-height: 100vh;
     place-items: center;
@@ -19,7 +33,7 @@ body {
   
   .title {
     text-align: center;
-    margin: 1rem 0;
+    margin-bottom: 2rem;
   }
 
   .underline {
@@ -33,14 +47,14 @@ body {
   .container {
     width: 80vw;
     max-width: 800px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
   }
 
   .top-container {
-    display:flex; 
-    flex-direction: row; 
+    /* display:flex; 
+    flex-direction: row; */
     justify-content: space-between; 
-    align-items: center;
+    align-items: center; 
     margin: 10px;
     margin-bottom: 30px;
   }

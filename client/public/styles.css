@@ -1,6 +1,9 @@
-html {
-    font-family: "Montserrat", sans-serif;
-  }
+* {
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
     /* dark shades of primary color*/
@@ -63,24 +66,30 @@ html {
     font-weight: 200;
   }
 
+  #footer .container-fluid{
+    padding: 12px 165px;
+    text-align: center;
+  }
+  
+  footer p {
+    margin: 0;
+    color: #ccc;
+  }
+
 .home-body {
-  position: relative;
+  min-height: 83vh;
+  margin: 0;
 }
 
 .home-animation {
-  height: 680px;
-    position: absolute;
-    left: 0;
-    top: -80px;
+  max-width: 100%;
 }
 
-.btn-home {
-  position: absolute;
-  right: 200px;
-  top: 200px;
+.home-elements-container {
   display: flex;
   flex-direction: column;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .icon {
@@ -92,32 +101,34 @@ html {
 .allUsersBody {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 20px;
+  margin-bottom: 0;
 }
 
-.allUsersBody h1 {
+/* .allUsersBody h1 {
   text-align: center;
-}
+} */
 
 .styled-table {
-  /* text-align: center; */
   border-collapse: collapse;
   margin: 25px 0;
   font-size: 1em;
   font-family: sans-serif;
-  min-width: 400px;
+  max-width: 1000px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .styled-table thead tr {
   background-color: #009879;
   color: #ffffff;
-  text-align: left;
+  /* text-align: center; */
 }
 
 .styled-table th,
 .styled-table td {
-    padding: 18px 35px;
+    padding: 18px 0 18px 30px;
 }
 
 .styled-table tbody tr {

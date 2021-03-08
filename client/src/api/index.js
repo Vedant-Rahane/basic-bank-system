@@ -6,10 +6,13 @@ const api = axios.create({
 
 export const getAllUsers = () => api.get(`/users`);
 export const getUserById = (id) => api.get(`/user/${id}`);
+export const updateUser = (id, transaction) =>
+  api.patch(`/user/${id}`, transaction);
 
 const apis = {
   getAllUsers,
   getUserById,
+  updateUser,
 };
 
 export default apis;
