@@ -36,7 +36,11 @@ updateUser = async (req, res) => {
   }
 
   const amount = parseInt(body.amount);
-
+  let senderDetail = {
+    name: "",
+    accNo: "",
+  };
+  
   User.findOne({ _id: req.params.id }, (err, user) => {
     if (err) {
       return res.status(404).json({
@@ -44,6 +48,11 @@ updateUser = async (req, res) => {
         message: "User not found!",
       });
     }
+
+    senderDetail = {
+      name: user.fName + " " + user.lName,
+      accNo: user.accountNo,
+    };
 
     const strBalanceSender = user.currentBal;
     const numBalanceSender = Number(strBalanceSender.replace(/[^0-9.-]+/g, ""));
@@ -54,6 +63,19 @@ updateUser = async (req, res) => {
       currency: "inr",
       minimumFractionDigits: 2,
     });
+
+    const sendersTransactions = user.accountHistory;
+
+    sendersTransactions.unshift({
+      type: "debit",
+      amount: body.amount,
+      narration:
+        "To -" + body.receiverName + " / Account No. :" + body.receiverAccountNo,
+      date: new Date().toLocaleString(),
+    });
+
+    user.accountHistory = sendersTransactions;
+
     user
       .save()
       .then(() => {
@@ -71,7 +93,7 @@ updateUser = async (req, res) => {
       });
   });
 
-  User.findOne({ accountNo: body.accountNo }, (err, user) => {
+  User.findOne({ _id: body.receiverId }, (err, user) => {
     if (err) {
       return res.status(404).json({
         err,
@@ -90,6 +112,19 @@ updateUser = async (req, res) => {
         currency: "inr",
         minimumFractionDigits: 2,
       });
+
+      const receiversTransactions = user.accountHistory;
+
+      receiversTransactions.unshift({
+          type: "credit",
+          amount: body.amount,
+          narration:
+            "From -" + senderDetail.name + " / Account No. :" + senderDetail.accNo,
+          date: new Date().toLocaleString(),
+        });
+
+        user.accountHistory = receiversTransactions;
+
       user
         .save()
         .then(() => {
