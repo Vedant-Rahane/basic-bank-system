@@ -56,9 +56,16 @@ function UserDetail({ match }) {
   });
 
   // To hide transaction card
-  function hide() {
-    const collapseCon = document.querySelector('#collapseTransfer');
-    collapseCon.setAttribute("class", "collapse-container collapse");
+  function hideTransfer() {
+    setShowTransferMoneyText(true);
+    const transferCon = document.querySelector('#collapseTransfer');
+    transferCon.setAttribute("class", "collapse-container collapse");
+  }
+
+  function hideTransaction() {
+    setShowTrasactionsText(true);
+    const transactionCon = document.querySelector('#collapseTransaction');
+    transactionCon.setAttribute("class", "collapse-container collapse");
   }
 
   function showAlert() {
@@ -84,6 +91,21 @@ function UserDetail({ match }) {
     fetchReceiver(document.getElementsByTagName("option")[x].value);
   }
 
+  const loadingAnimation = () => {
+    document.querySelector(".overlay").classList.add("show");
+    document.querySelector(".spanner").classList.add("show");
+    
+    setTimeout(() => {
+      document.querySelector(".overlay").classList.remove("show");
+      document.querySelector(".spanner").classList.remove("show");
+      fetchUser();
+      topScroll();
+      hideTransfer();
+      showAlert();
+    }, 10000);
+    
+  }
+
   // To store entered Amount
   function handleChange(event) {
     setAmount(event.target.value);
@@ -102,11 +124,6 @@ function UserDetail({ match }) {
     console.log(transaction);
 
     await api.updateUser(user._id, transaction).then(res => {
-
-      fetchUser();
-      hide();
-      topScroll();
-      showAlert();
       setTransaction({
         accountNo: "",  
         amount: "",
@@ -119,9 +136,23 @@ function UserDetail({ match }) {
 
   return (
     <div className="user-detail-container">
-      <div id="alertMsg" className="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Success!</strong> Your Payment of <strong>Rs. {amount}</strong> to <strong>{receiver.fName} {receiver.lName}</strong> is Completed.
-        <button onClick={closeAlert} type="button" className="close" aria-label="Close">
+      <div
+        id="alertMsg"
+        className="alert alert-success alert-dismissible fade show"
+        role="alert"
+      >
+        <strong>Success!</strong> Your Payment of <strong>Rs. {amount}</strong>{" "}
+        to{" "}
+        <strong>
+          {receiver.fName} {receiver.lName}
+        </strong>{" "}
+        is Completed.
+        <button
+          onClick={closeAlert}
+          type="button"
+          className="close"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -133,17 +164,19 @@ function UserDetail({ match }) {
         <div className="user-detail">
           <div className="top-container row">
             <div className="col-lg-4 col-md-4 img-container">
-            <div className="">
-            <img src={user.image} alt={user.fName} className="person-img" />
-            </div>
+              <div className="">
+                <img src={user.image} alt={user.fName} className="person-img" />
+              </div>
             </div>
             <div className="col-lg-8 col-md-8 card-container">
               <Plastic
                 className="credit-card"
                 type="amex"
                 name={user.fName + " " + user.lName}
-                expiry={user.creditCard ? user.creditCard.exp : "03/2030" }
-                number={user.creditCard ? user.creditCard.number : "236526723766728" }
+                expiry={user.creditCard ? user.creditCard.exp : "03/2030"}
+                number={
+                  user.creditCard ? user.creditCard.number : "236526723766728"
+                }
                 cvc={user.creditCard ? user.creditCard.cvv : "678"}
               />
             </div>
@@ -182,43 +215,62 @@ function UserDetail({ match }) {
           </Table>
 
           <div className="btn-container">
-          <Button
-            className="user-container-btn"
-            onClick={() => setShowTransferMoneyText(!showTransferMoneyText)}
-            variant="primary"
-            data-toggle="collapse"
-            data-target="#collapseTransfer"
-            aria-expanded="false"
-            aria-controls="collapseTransfer"
-          >
-          {showTransferMoneyText ? "Transfer Money" : "Cancel transfer"}
-          </Button>
-          <Button 
-            className="user-container-btn" 
-            onClick={() => setShowTrasactionsText(!showTrasactionsText)}
-            variant="primary" 
-            data-toggle="collapse" 
-            data-target="#collapseTransaction" 
-            aria-expanded="false" 
-            aria-controls="collapseTransaction">
-            {showTrasactionsText ? "Show Transactions" : "Hide Transactions"}
-          </Button>
+            <Button
+              className="user-container-btn"
+              onClick={() => {
+                hideTransaction()
+                setShowTransferMoneyText(!showTransferMoneyText)
+                }}
+              variant="primary"
+              data-toggle="collapse"
+              data-target="#collapseTransfer"
+              aria-expanded="false"
+              aria-controls="collapseTransfer"
+            >
+              {showTransferMoneyText ? "Transfer Money" : "Cancel transfer"}
+            </Button>
+            <Button
+              className="user-container-btn"
+              onClick={() => {
+                hideTransfer()
+                setShowTrasactionsText(!showTrasactionsText)
+              }}
+              variant="primary"
+              data-toggle="collapse"
+              data-target="#collapseTransaction"
+              aria-expanded="false"
+              aria-controls="collapseTransaction"
+            >
+              {showTrasactionsText ? "Show Transactions" : "Hide Transactions"}
+            </Button>
           </div>
 
-          <div  className="collapse collapse-container" id="collapseTransfer">
-            <form onSubmit={handleUpdateUser} className="needs-validation has-validation">
+          <div className="collapse" id="collapseTransfer">
+            <form
+              onSubmit={handleUpdateUser}
+              className="needs-validation has-validation"
+            >
               <div className="transfer-form">
                 <label>Receiver Name</label>
                 <div className="input-group mb-3">
-                <select id="receiversOption" onChange={getReceiverId} className="form-control" aria-label="Default select example" required>
-                  <option value="" selected disabled hidden>Select Receiver</option>
-                  {uniqueUsers.map((user, index) => {
-                    return(
-                    <option key={index} value={user._id}>{user.fName + " " + user.lName}</option>
-                    );
-                    
-                  })}
-                </select>
+                  <select
+                    id="receiversOption"
+                    onChange={getReceiverId}
+                    className="form-control"
+                    aria-label="Default select example"
+                    required
+                  >
+                    <option value="" selected disabled hidden>
+                      Select Receiver
+                    </option>
+                    {uniqueUsers.map((user, index) => {
+                      return (
+                        <option key={index} value={user._id}>
+                          {user.fName + " " + user.lName}
+                        </option>
+                      );
+                    })}
+                  </select>
                   <div className="invalid-feedback">
                     Please Enter Receiver Name
                   </div>
@@ -240,7 +292,7 @@ function UserDetail({ match }) {
                     Please Enter Account Number
                   </div>
                 </div>
-                
+
                 <label>Amount</label>
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
@@ -257,13 +309,17 @@ function UserDetail({ match }) {
                   {/* <div className="input-group-append">
                     <span className="input-group-text">.00</span>
                   </div> */}
-                  <div className="invalid-feedback">
-                    Please Enter Amount
-                  </div>
+                  <div className="invalid-feedback">Please Enter Amount</div>
                 </div>
-                
+
                 <div className="form-check">
-                  <input className="form-check-input" type="checkbox" value="" id="invalidCheck" required />
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="invalidCheck"
+                    required
+                  />
                   <label className="form-check-label" htmlFor="invalidCheck">
                     Are you sure to continue transaction
                   </label>
@@ -271,53 +327,43 @@ function UserDetail({ match }) {
                     Check the box to continue
                   </div>
                 </div>
-
-                </div>
-                <Button type="submit" className="transfer-btn" variant="primary">
-                  Transfer
-                </Button>
+              </div>
+              <Button
+                type="submit"
+                onClick={loadingAnimation}
+                className="transfer-btn"
+                variant="primary" 
+              >
+                Transfer
+              </Button>
             </form>
           </div>
-          <div  className="collapse" id="collapseTransaction">
+          <div className="spanner">
+            <div className="spanner-content">
+            <div className="loader"></div>
+            <p>Transaction in process...</p>
+            </div>
+          </div>
+          <div className="collapse" id="collapseTransaction">
             <Table bordered>
               <thead>
                 <tr>
-                  <th>
-                    No.
-                  </th>
-                  <th>
-                    Date
-                  </th>
-                  <th>
-                    Type
-                  </th>
-                  <th>
-                    Narration
-                  </th>
-                  <th>
-                    Amount
-                  </th>
+                  <th>No.</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Narration</th>
+                  <th>Amount</th>
                 </tr>
               </thead>
               <tbody>
                 {transactionHistory.map((transaction, index) => {
-                  return(
+                  return (
                     <tr key={index}>
-                      <td>
-                        {index + 1}
-                      </td>
-                      <td>
-                        {transaction.date}
-                      </td>
-                      <td>
-                        {transaction.type}
-                      </td>
-                      <td>
-                        {transaction.narration}
-                      </td>
-                      <td>
-                        {transaction.amount}
-                      </td>
+                      <td>{index + 1}</td>
+                      <td>{transaction.date}</td>
+                      <td>{transaction.type}</td>
+                      <td>{transaction.narration}</td>
+                      <td>{transaction.amount}</td>
                     </tr>
                   );
                 })}
