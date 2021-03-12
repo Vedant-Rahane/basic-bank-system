@@ -164,7 +164,8 @@ body {
   } 
   
   #collapseTransfer {  
-    min-width: 500px;
+    max-width: 500px;
+    /* min-width: 10%; */
     text-align: center;
     margin: 30px 0;
     padding: 20px;
@@ -180,6 +181,7 @@ body {
   }
 
   #collapseTransaction {
+    /* min-width: 20%; */
     margin: 30px 0;
     border-collapse: collapse;
   }
@@ -305,4 +307,20 @@ body {
   
   .spanner.show, .overlay.show {
     opacity: 1
+  }
+
+  .notifError {
+    display: block;
+    background-color: #f39c81d9;
+    color: #fffdfa;
+    border-radius: 0.5rem;
+    border: 1px solid #78201B;
+    padding: 1rem; 
+  }
+  
+  .inlineForm__notif {
+      height: 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center; 
   }

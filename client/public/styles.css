@@ -79,17 +79,57 @@
 .home-body {
   min-height: 83vh;
   margin: 0;
+  align-items: center;
 }
 
 .home-animation {
   max-width: 100%;
 }
 
-.home-elements-container {
+#timedate {
+  font: small-caps lighter 40px/150% "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+  text-align:left;
+  /* margin: 40px auto; */
+  color:#000;
+  border-left: 3px solid #ed1f24;
+  padding: 20px;
+}
+
+.home-left-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: left;
+  padding-left: 2rem;
+}
+
+.home-left-container h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 60px;
+}
+
+
+.home-right-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
   align-items: center;
+}
+
+@media (max-width:768px) {
+  .home-left-container {
+    margin-top: 20px;
+  }
+
+  .home-right-container {
+    padding: 34px;
+  }
 }
 
 .icon {

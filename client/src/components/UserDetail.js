@@ -3,6 +3,7 @@ import api from "../api";
 import { Table, Button } from "react-bootstrap";
 import Plastic from "react-plastic";
 import "../css/userDetail.css";
+import Error from './Error';
 
 function UserDetail({ match }) {
   const [user, setUser] = useState({});
@@ -10,7 +11,8 @@ function UserDetail({ match }) {
     receiverId: "",
     receiverAccountNo: "",  
     amount: "",
-    receiverName: ""
+    receiverName: "",
+    senderCurrentBalance: ""
   });
   const [users, setUsers] = useState([]);
   const [receiver, setReceiver] = useState({accountNo:""});
@@ -22,11 +24,16 @@ function UserDetail({ match }) {
     type: "",
     narration: "",
     amount: ""
-  }])
+  }]);
+  const [err, setErr] = useState(null);
+  const [transactionSuccess, setTransactionSuccess] = useState(true);
 
   async function fetchUsers() {
     await api.getAllUsers().then((res) => {
       setUsers(res.data.data);
+      console.log(res.data);
+    }).catch(err => {
+      console.log("CATCH = ", err.response);
     });
   }
 
@@ -59,13 +66,13 @@ function UserDetail({ match }) {
   function hideTransfer() {
     setShowTransferMoneyText(true);
     const transferCon = document.querySelector('#collapseTransfer');
-    transferCon.setAttribute("class", "collapse-container collapse");
+    transferCon.setAttribute("class", "collapse");
   }
 
   function hideTransaction() {
     setShowTrasactionsText(true);
     const transactionCon = document.querySelector('#collapseTransaction');
-    transactionCon.setAttribute("class", "collapse-container collapse");
+    transactionCon.setAttribute("class", "collapse");
   }
 
   function showAlert() {
@@ -98,11 +105,13 @@ function UserDetail({ match }) {
     setTimeout(() => {
       document.querySelector(".overlay").classList.remove("show");
       document.querySelector(".spanner").classList.remove("show");
-      fetchUser();
-      topScroll();
-      hideTransfer();
-      showAlert();
-    }, 10000);
+      if(transactionSuccess) {
+        fetchUser();
+        topScroll();
+        hideTransfer();
+        showAlert();
+      }
+    }, 5000);
     
   }
 
@@ -113,7 +122,8 @@ function UserDetail({ match }) {
       receiverId: receiver._id,
       receiverAccountNo: receiver.accountNo,  
       amount: event.target.value,
-      receiverName: receiver.fName + " " + receiver.lName
+      receiverName: receiver.fName + " " + receiver.lName,
+      senderCurrentBalance: user.currentBal
     })
   }
 
@@ -122,17 +132,26 @@ function UserDetail({ match }) {
   const handleUpdateUser = async (event) => {
     event.preventDefault();
     console.log(transaction);
-
-    await api.updateUser(user._id, transaction).then(res => {
+    loadingAnimation();
+    await api.updateUser(user._id, transaction)
+    .then(res => {
+      setTransactionSuccess(true);
       setTransaction({
-        accountNo: "",  
+        receiverId: "",
+        receiverAccountNo: "",  
         amount: "",
-        receiverName: ""
-    })
-  })
+        receiverName: "",
+        senderCurrentBalance: ""
+      });
+    }).catch(err => {
+      // setTransactionSuccess(false);
+      console.log("CATCH = ", err.response.data.message);
+      setTimeout(() => {
+        setErr(err.response.data.message);
+      }, 2000);
+    });
+    
 }
-
-// data-dismiss="alert"
 
   return (
     <div className="user-detail-container">
@@ -245,7 +264,10 @@ function UserDetail({ match }) {
             </Button>
           </div>
 
-          <div className="collapse" id="collapseTransfer">
+          <div className="collapse container-fluid" id="collapseTransfer">
+            {err && <div className="inlineForm__notif">
+              <Error error={err}/>
+            </div>}
             <form
               onSubmit={handleUpdateUser}
               className="needs-validation has-validation"
@@ -330,7 +352,6 @@ function UserDetail({ match }) {
               </div>
               <Button
                 type="submit"
-                onClick={loadingAnimation}
                 className="transfer-btn"
                 variant="primary" 
               >
@@ -344,7 +365,7 @@ function UserDetail({ match }) {
             <p>Transaction in process...</p>
             </div>
           </div>
-          <div className="collapse" id="collapseTransaction">
+          <div className="collapse container-fluid" id="collapseTransaction">
             <Table bordered>
               <thead>
                 <tr>
@@ -363,7 +384,15 @@ function UserDetail({ match }) {
                       <td>{transaction.date}</td>
                       <td>{transaction.type}</td>
                       <td>{transaction.narration}</td>
-                      <td>{transaction.amount}</td>
+                      <td
+                        style={
+                          transaction.type === "debit"
+                            ? { color: "red" }
+                            : { color: "green" }
+                        }
+                      >
+                        {transaction.amount}
+                      </td>
                     </tr>
                   );
                 })}

@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <Router>
-        <div class="overlay"></div>
+        <div className="overlay"></div>
         <Navbar />
         <Switch>
           <Route path="/" exact component={HomeContent} />
