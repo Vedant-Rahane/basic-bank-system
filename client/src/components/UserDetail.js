@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
 import { Table, Button } from "react-bootstrap";
 import Plastic from "react-plastic";
-import "../css/userDetail.css";
+import "./css/UserDetail.css";
 import Error from './Error';
+import api from "../api";
+
 
 function UserDetail({ match }) {
   const [user, setUser] = useState({});
@@ -26,12 +27,10 @@ function UserDetail({ match }) {
     amount: ""
   }]);
   const [err, setErr] = useState(null);
-  const [transactionSuccess, setTransactionSuccess] = useState(true);
 
   async function fetchUsers() {
     await api.getAllUsers().then((res) => {
       setUsers(res.data.data);
-      console.log(res.data);
     }).catch(err => {
       console.log("CATCH = ", err.response);
     });
@@ -105,13 +104,7 @@ function UserDetail({ match }) {
     setTimeout(() => {
       document.querySelector(".overlay").classList.remove("show");
       document.querySelector(".spanner").classList.remove("show");
-      if(transactionSuccess) {
-        fetchUser();
-        topScroll();
-        hideTransfer();
-        showAlert();
-      }
-    }, 5000);
+    }, 3000);
     
   }
 
@@ -129,29 +122,57 @@ function UserDetail({ match }) {
 
 
   // To update user in backend by making patch request
-  const handleUpdateUser = async (event) => {
-    event.preventDefault();
-    console.log(transaction);
-    loadingAnimation();
-    await api.updateUser(user._id, transaction)
-    .then(res => {
-      setTransactionSuccess(true);
-      setTransaction({
-        receiverId: "",
-        receiverAccountNo: "",  
-        amount: "",
-        receiverName: "",
-        senderCurrentBalance: ""
-      });
-    }).catch(err => {
-      // setTransactionSuccess(false);
-      console.log("CATCH = ", err.response.data.message);
-      setTimeout(() => {
+
+const transferMoney = async () => {
+  await api.updateUser(user._id, transaction)
+      .then(res => {
+        
+        setTransaction({
+          receiverId: "",
+          receiverAccountNo: "",  
+          amount: "",
+          receiverName: "",
+          senderCurrentBalance: ""
+        });
+        
+      }).catch(err => {
+
+        console.log("CATCH = ", err.response.data.message);
         setErr(err.response.data.message);
-      }, 2000);
-    });
-    
+
+      });
+
+      setTimeout(() => {
+        fetchUser();
+        topScroll();
+        hideTransfer();
+        showAlert();
+      }, 3000);
 }
+
+  function cancelTransfer() {
+    setErr("Sorry! Amount Entered is greater than current balance.");
+    setTransaction({
+      receiverId: "",
+      receiverAccountNo: "",  
+      amount: "",
+      receiverName: "",
+      senderCurrentBalance: ""
+    });
+  }
+
+
+  async function handleUpdateUser(event) {
+    event.preventDefault();
+    
+    if (parseInt(transaction.amount) < Number((transaction.senderCurrentBalance).replace(/[^0-9.-]+/g, ""))) {
+      loadingAnimation();
+      await transferMoney();
+    } else {
+      loadingAnimation();
+      setTimeout(() => {cancelTransfer()},3000);
+    }
+  }
 
   return (
     <div className="user-detail-container">
@@ -183,8 +204,8 @@ function UserDetail({ match }) {
         <div className="user-detail">
           <div className="top-container row">
             <div className="col-lg-4 col-md-4 img-container">
-              <div className="">
-                <img src={user.image} alt={user.fName} className="person-img" />
+              <div className="img">
+              <img src={user.image} alt={user.fName} className="person-img" />
               </div>
             </div>
             <div className="col-lg-8 col-md-8 card-container">
@@ -200,7 +221,7 @@ function UserDetail({ match }) {
               />
             </div>
           </div>
-          <Table className="user-table">
+          <Table className="user-table" responsive >
             <tbody>
               <tr>
                 <td>First Name</td>
@@ -328,9 +349,6 @@ function UserDetail({ match }) {
                     className="form-control"
                     required
                   />
-                  {/* <div className="input-group-append">
-                    <span className="input-group-text">.00</span>
-                  </div> */}
                   <div className="invalid-feedback">Please Enter Amount</div>
                 </div>
 
@@ -366,7 +384,7 @@ function UserDetail({ match }) {
             </div>
           </div>
           <div className="collapse container-fluid" id="collapseTransaction">
-            <Table bordered>
+            <Table bordered responsive="sm" >
               <thead>
                 <tr>
                   <th>No.</th>

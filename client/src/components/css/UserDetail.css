@@ -1,22 +1,5 @@
 
-body {
-    background: #e4fbff;
-    box-sizing: border-box;
-    padding: 0;
-    background-image: url("https://www.transparenttextures.com/patterns/connected.png");
-  }
-
-  #footer .container-fluid{
-    padding: 12px 165px;
-    text-align: center;
-  }
-  
-  footer p {
-    margin: 0;
-    color: #ccc;
-  }
-
-  #alertMsg {
+#alertMsg {
     margin-bottom: 0.5rem;
     visibility: hidden;
   }
@@ -52,15 +35,13 @@ body {
   }
 
   .top-container {
-    /* display:flex; 
-    flex-direction: row; */
     justify-content: center; 
     align-items: center; 
     margin: 10px;
     margin-bottom: 30px;
   }
 
-  @media (max-width:768px) {
+  @media (min-width: 580px) and (max-width: 768px) {
 
     .person-img {
     width: 150px;
@@ -70,7 +51,7 @@ body {
 
     .top-container .card-container {
       margin-top: 40px;
-      padding-left: 15px;
+      /* padding-left: 15px; */
     }
 
   }
@@ -88,35 +69,14 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-left: 40px;
   }
   
   .person-img {
     max-width: 100%;
     max-height: 100%;
     border-radius: 50%;
+    z-index: 1000;
   }
-
-  .img-background {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background:  hsl(205, 78%, 60%);
-    position: absolute;
-    top: -0.25rem;
-    right: -0.5rem;
-  }
-
-  /* .img-container::before {
-    content: '';
-    width: 100%;
-    height: 100%;
-    background:  hsl(205, 78%, 60%);
-    position: absolute;
-    top: -0.25rem;
-    right: -0.5rem;
-    border-radius: 50%;
-  } */
 
   .user-detail {
     display: flex;
@@ -139,11 +99,14 @@ body {
     text-align: left;
   }
 
+  .user-table td:first-child {
+    font-weight: 700;
+    color: #009879;
+  }
+
   .btn-container {
     display: flex;
-    /* flex-direction: row; */
     justify-content: space-between;
-    /* flex-wrap: wrap; */
   }
 
   .user-container-btn {
@@ -165,7 +128,6 @@ body {
   
   #collapseTransfer {  
     max-width: 500px;
-    /* min-width: 10%; */
     text-align: center;
     margin: 30px 0;
     padding: 20px;
@@ -177,12 +139,11 @@ body {
   #collapseTransfer:hover {
     padding-left: 12px;
     border-left: 10px solid #00ff99;
-    /* box-shadow: 0 5px 15px #00ff99; */
   }
 
   #collapseTransaction {
-    /* min-width: 20%; */
     margin: 30px 0;
+    padding: 10px;
     border-collapse: collapse;
   }
 
@@ -196,13 +157,66 @@ body {
   }
 
   .transfer-form {
-      text-align: left;
+    text-align: left;
   }
 
   .transfer-btn {
-      margin-top: 20px;
-       border: 0;
+    margin-top: 20px;
+    border: 0;
   }
+
+  @media (max-width:580px) {
+
+    .user-detail-container {
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 90vw;
+      padding: 0;
+      margin: 25px 20px;
+      /* margin-bottom: 25px; */
+    }
+
+    .user-detail {
+      padding: 1.5rem 1rem;
+    }
+
+    .title {
+      margin: 1rem 0;
+    }
+
+    #alertMsg {
+      padding: 0.6rem 1rem;
+      display: none;
+    }
+
+    .top-container {
+      margin: 0;
+    }
+
+    .img-container {
+      padding: 0;
+    }
+
+    .person-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      }
+
+    .card-container {
+      margin: 0;
+      /* padding: 20px 0; */
+    }
+
+    .user-container-btn {
+      margin: 0.5rem 1rem;
+    }
+
+  }
+
+    /* ---------------Loading Animation --------------- */
 
   .spanner{
     position: fixed;
@@ -297,7 +311,7 @@ body {
   .show{
     display: block;
   }
-  
+
   .spanner, .overlay{
     opacity: 0;
     -webkit-transition: all 0.3s;
@@ -308,6 +322,9 @@ body {
   .spanner.show, .overlay.show {
     opacity: 1
   }
+
+
+  /* ---------Transaction Fail Error--------- */
 
   .notifError {
     display: block;
@@ -323,4 +340,5 @@ body {
       display: flex;
       align-items: center;
       justify-content: center; 
+      margin-bottom: 20px;
   }

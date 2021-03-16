@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../api";
 import { Table } from "react-bootstrap";
+import "./css/AllUsers.css";
 
 function AllUsers() {
   const [users, setUsers] = useState([]);
@@ -8,7 +9,7 @@ function AllUsers() {
   async function fetchData() {
     await api.getAllUsers().then((res) => {
       setUsers(res.data.data);
-      console.log(res.data.data);
+      // console.log(res.data.data);
     });
   }
 

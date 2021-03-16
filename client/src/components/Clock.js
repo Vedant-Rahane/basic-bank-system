@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import "./css/Clock.css";
 
 function Clock() {
   useEffect(() => {
@@ -45,12 +46,13 @@ function Clock() {
 
     var ampm = now.getHours() >= 12 ? " PM" : " AM";
 
-    document.getElementById(
-      "first"
-    ).innerHTML = `${days[day]}, ${date} ${months[mo]} ${yr}`;
-    document.getElementById("second").innerHTML = `${hou.pad(2)} : ${min.pad(
-      2
-    )} : ${sec.pad(2)} ${ampm}`;
+    document.getElementById("day").innerHTML = `${days[day]},`;
+
+      document.getElementById("date").innerHTML = `${date} ${months[mo]} ${yr}`;
+
+      document.getElementById("time").innerHTML = `${hou.pad(2)} : ${min.pad(
+        2
+      )} : ${sec.pad(2)} ${ampm}`;
   }
 
   function initClock() {
@@ -60,12 +62,11 @@ function Clock() {
     }, 1);
   }
 
-  //   window.onload = initClock();
-
   return (
     <div id="timedate">
-      <p id="first">Date</p>
-      <p id="second">Time</p>
+      <span id="day"></span>
+      <span id="date"></span>
+      <span id="time"></span>
     </div>
   );
 }
