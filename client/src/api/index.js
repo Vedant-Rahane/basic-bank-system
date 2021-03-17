@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "https://basic-bank-system-project.herokuapp.com/api",
 });
 
 export const getAllUsers = () => api.get(`/users`);

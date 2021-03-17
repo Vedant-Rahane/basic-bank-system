@@ -43,7 +43,7 @@ updateUser = async (req, res) => {
     accNo: "",
   };
 
-  User.findOne({ _id: req.params.id }, (err, user) => {
+  await User.findOne({ _id: req.params.id }, (err, user) => {
     if (err) {
       return res.status(404).json({
         err,
@@ -73,7 +73,7 @@ updateUser = async (req, res) => {
       type: "debit",
       amount: body.amount,
       narration:
-        "To -" +
+        "To - " +
         body.receiverName +
         " / Account No. :" +
         body.receiverAccountNo,
@@ -84,72 +84,80 @@ updateUser = async (req, res) => {
 
     user
       .save()
-      // .then(() => {
-      //   return res.status(200).json({
-      //     success: true,
-      //     id: user._id,
-      //     message: "User updated!",
-      //   });
-      // })
+      .then(() => {
+        res.status(200).send({
+          success: true,
+          id: user._id,
+          message: "User updated!",
+        });
+      })
       .catch((error) => {
-        return res.status(404).json({
-          error,
+        res.status(404).send({
+          success: false,
+          err: error,
           message: "User not updated!",
         });
       });
   });
 
-  User.findOne({ _id: body.receiverId }, (err, user) => {
+  await User.findOne({ _id: body.receiverId }, (err, user) => {
     if (err) {
       return res.status(404).json({
         err,
         message: "User not found!",
       });
     }
-    if (user) {
-      const strBalanceReceiver = user.currentBal;
-      const numBalanceReceiver = Number(
-        strBalanceReceiver.replace(/[^0-9.-]+/g, "")
-      );
-      const newBalanceReceiver = numBalanceReceiver + amount;
-
-      user.currentBal = newBalanceReceiver.toLocaleString("en-US", {
-        style: "currency",
-        currency: "inr",
-        minimumFractionDigits: 2,
-      });
-
-      const receiversTransactions = user.accountHistory;
-
-      receiversTransactions.unshift({
-        type: "credit",
-        amount: body.amount,
-        narration:
-          "From -" +
-          senderDetail.name +
-          " / Account No. :" +
-          senderDetail.accNo,
-        date: new Date().toLocaleString(),
-      });
-
-      user.accountHistory = receiversTransactions;
-
-      user
-        .save()
-        // .then(() => {
-        //   return res.status(200).json({
-        //     success: true,
-        //     id: user._id,
-        //     message: "User updated!",
-        //   });
-        // })
-        .catch((error) => {
-          return res.status(404).json({
-            error,
-            message: "User not updated!",
-          });
+      if(user){
+        const strBalanceReceiver = user.currentBal;
+        const numBalanceReceiver = Number(
+          strBalanceReceiver.replace(/[^0-9.-]+/g, "")
+        );
+        const newBalanceReceiver = numBalanceReceiver + amount;
+  
+        user.currentBal = newBalanceReceiver.toLocaleString("en-US", {
+          style: "currency",
+          currency: "inr",
+          minimumFractionDigits: 2,
         });
-    }
+  
+        const receiversTransactions = user.accountHistory;
+  
+        receiversTransactions.unshift({
+          type: "credit",
+          amount: body.amount,
+          narration:
+            "From - " +
+            senderDetail.name +
+            " / Account No. :" +
+            senderDetail.accNo,
+          date: new Date().toLocaleString(),
+        });
+  
+        user.accountHistory = receiversTransactions;
+  
+        user
+          .save()
+          .then(() => {
+            res.status(200).send({
+              success: true,
+              id: user._id,
+              message: "User updated!",
+            });
+          })
+          .catch((error) => {
+            res.status(404).send({
+              success: false,
+              err: error,
+              message: "User not updated!",
+            });
+          });
+      } else {
+        res.status(404).send({
+          success: false,
+          message: "User not found!",
+        });
+      }
+
   });
 };
 

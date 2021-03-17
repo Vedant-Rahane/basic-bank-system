@@ -10,43 +10,48 @@ function UserDetail({ match }) {
   const [user, setUser] = useState({});
   const [transaction, setTransaction] = useState({
     receiverId: "",
-    receiverAccountNo: "",  
+    receiverAccountNo: "",
     amount: "",
     receiverName: "",
-    senderCurrentBalance: ""
+    senderCurrentBalance: "",
   });
   const [users, setUsers] = useState([]);
-  const [receiver, setReceiver] = useState({accountNo:""});
+  const [receiver, setReceiver] = useState({ accountNo: "" });
   const [amount, setAmount] = useState("");
   const [showTransferMoneyText, setShowTransferMoneyText] = useState(true);
   const [showTrasactionsText, setShowTrasactionsText] = useState(true);
-  const [transactionHistory, setTransactionHistory] = useState([{
-    date: "",
-    type: "",
-    narration: "",
-    amount: ""
-  }]);
+  const [transactionHistory, setTransactionHistory] = useState([
+    {
+      date: "",
+      type: "",
+      narration: "",
+      amount: "",
+    },
+  ]);
   const [err, setErr] = useState(null);
 
   async function fetchUsers() {
-    await api.getAllUsers().then((res) => {
-      setUsers(res.data.data);
-    }).catch(err => {
-      console.log("CATCH = ", err.response);
-    });
+    await api
+      .getAllUsers()
+      .then((res) => {
+        setUsers(res.data.data);
+      })
+      .catch((err) => {
+        console.log("CATCH = ", err.response);
+      });
   }
 
   async function fetchUser() {
     await api.getUserById(match.params.id).then((res) => {
-      var usersData =  JSON.parse(JSON.stringify(res));
+      var usersData = JSON.parse(JSON.stringify(res));
       setUser(usersData.data.data);
-      setTransactionHistory(usersData.data.data.accountHistory)
+      setTransactionHistory(usersData.data.data.accountHistory);
     });
   }
 
   async function fetchReceiver(id) {
     await api.getUserById(id).then((res) => {
-      var receiversData =  JSON.parse(JSON.stringify(res));
+      var receiversData = JSON.parse(JSON.stringify(res));
       setReceiver(receiversData.data.data);
     });
   }
@@ -64,22 +69,22 @@ function UserDetail({ match }) {
   // To hide transaction card
   function hideTransfer() {
     setShowTransferMoneyText(true);
-    const transferCon = document.querySelector('#collapseTransfer');
+    const transferCon = document.querySelector("#collapseTransfer");
     transferCon.setAttribute("class", "collapse");
   }
 
   function hideTransaction() {
     setShowTrasactionsText(true);
-    const transactionCon = document.querySelector('#collapseTransaction');
+    const transactionCon = document.querySelector("#collapseTransaction");
     transactionCon.setAttribute("class", "collapse");
   }
 
   function showAlert() {
-    document.querySelector('#alertMsg').style.visibility = "visible";
+    document.querySelector("#alertMsg").style.visibility = "visible";
   }
-  
-  function closeAlert(){
-    document.querySelector('#alertMsg').style.visibility = "hidden";
+
+  function closeAlert() {
+    document.querySelector("#alertMsg").style.visibility = "hidden";
     window.location.reload();
   }
 
@@ -87,7 +92,7 @@ function UserDetail({ match }) {
   function topScroll() {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   }
 
@@ -100,77 +105,76 @@ function UserDetail({ match }) {
   const loadingAnimation = () => {
     document.querySelector(".overlay").classList.add("show");
     document.querySelector(".spanner").classList.add("show");
-    
+
     setTimeout(() => {
       document.querySelector(".overlay").classList.remove("show");
       document.querySelector(".spanner").classList.remove("show");
     }, 3000);
-    
-  }
+  };
 
   // To store entered Amount
   function handleChange(event) {
     setAmount(event.target.value);
     setTransaction({
       receiverId: receiver._id,
-      receiverAccountNo: receiver.accountNo,  
+      receiverAccountNo: receiver.accountNo,
       amount: event.target.value,
       receiverName: receiver.fName + " " + receiver.lName,
-      senderCurrentBalance: user.currentBal
-    })
+      senderCurrentBalance: user.currentBal,
+    });
   }
-
 
   // To update user in backend by making patch request
 
-const transferMoney = async () => {
-  await api.updateUser(user._id, transaction)
-      .then(res => {
-        
-        setTransaction({
-          receiverId: "",
-          receiverAccountNo: "",  
-          amount: "",
-          receiverName: "",
-          senderCurrentBalance: ""
-        });
-        
-      }).catch(err => {
-
-        console.log("CATCH = ", err.response.data.message);
-        setErr(err.response.data.message);
-
-      });
-
-      setTimeout(() => {
-        fetchUser();
-        topScroll();
-        hideTransfer();
-        showAlert();
-      }, 3000);
-}
+  const transferMoney = async () => {
+    await api.updateUser(user._id, transaction)
+          .then((res) => {
+            setTransaction({
+              receiverId: "",
+              receiverAccountNo: "",
+              amount: "",
+              receiverName: "",
+              senderCurrentBalance: "",
+            });
+            fetchUser();
+          })
+          .catch((err) => {
+            console.log("CATCH = ", err);
+          });
+  };
 
   function cancelTransfer() {
     setErr("Sorry! Amount Entered is greater than current balance.");
     setTransaction({
       receiverId: "",
-      receiverAccountNo: "",  
+      receiverAccountNo: "",
       amount: "",
       receiverName: "",
-      senderCurrentBalance: ""
+      senderCurrentBalance: "",
     });
   }
 
-
   async function handleUpdateUser(event) {
     event.preventDefault();
-    
-    if (parseInt(transaction.amount) < Number((transaction.senderCurrentBalance).replace(/[^0-9.-]+/g, ""))) {
+
+    if (
+      parseInt(transaction.amount) <
+      Number(transaction.senderCurrentBalance.replace(/[^0-9.-]+/g, ""))
+    ) {
+      console.log(transaction);
       loadingAnimation();
-      await transferMoney();
+      transferMoney();
+      
+      setTimeout(() => {
+        topScroll();
+        hideTransfer();
+        showAlert();
+      }, 3000);
     } else {
       loadingAnimation();
-      setTimeout(() => {cancelTransfer()},3000);
+      setTimeout(() => {
+        cancelTransfer();
+      }, 3000);
     }
   }
 
@@ -205,7 +209,7 @@ const transferMoney = async () => {
           <div className="top-container row">
             <div className="col-lg-4 col-md-4 img-container">
               <div className="img">
-              <img src={user.image} alt={user.fName} className="person-img" />
+                <img src={user.image} alt={user.fName} className="person-img" />
               </div>
             </div>
             <div className="col-lg-8 col-md-8 card-container">
@@ -221,7 +225,7 @@ const transferMoney = async () => {
               />
             </div>
           </div>
-          <Table className="user-table" responsive >
+          <Table className="user-table" responsive>
             <tbody>
               <tr>
                 <td>First Name</td>
@@ -258,9 +262,9 @@ const transferMoney = async () => {
             <Button
               className="user-container-btn"
               onClick={() => {
-                hideTransaction()
-                setShowTransferMoneyText(!showTransferMoneyText)
-                }}
+                hideTransaction();
+                setShowTransferMoneyText(!showTransferMoneyText);
+              }}
               variant="primary"
               data-toggle="collapse"
               data-target="#collapseTransfer"
@@ -272,8 +276,8 @@ const transferMoney = async () => {
             <Button
               className="user-container-btn"
               onClick={() => {
-                hideTransfer()
-                setShowTrasactionsText(!showTrasactionsText)
+                hideTransfer();
+                setShowTrasactionsText(!showTrasactionsText);
               }}
               variant="primary"
               data-toggle="collapse"
@@ -286,9 +290,11 @@ const transferMoney = async () => {
           </div>
 
           <div className="collapse container-fluid" id="collapseTransfer">
-            {err && <div className="inlineForm__notif">
-              <Error error={err}/>
-            </div>}
+            {err && (
+              <div className="inlineForm__notif">
+                <Error error={err} />
+              </div>
+            )}
             <form
               onSubmit={handleUpdateUser}
               className="needs-validation has-validation"
@@ -368,23 +374,19 @@ const transferMoney = async () => {
                   </div>
                 </div>
               </div>
-              <Button
-                type="submit"
-                className="transfer-btn"
-                variant="primary" 
-              >
+              <Button type="submit" className="transfer-btn" variant="primary">
                 Transfer
               </Button>
             </form>
           </div>
           <div className="spanner">
             <div className="spanner-content">
-            <div className="loader"></div>
-            <p>Transaction in process...</p>
+              <div className="loader"></div>
+              <p>Transaction in process...</p>
             </div>
           </div>
           <div className="collapse container-fluid" id="collapseTransaction">
-            <Table bordered responsive="sm" >
+            <Table bordered responsive>
               <thead>
                 <tr>
                   <th>No.</th>
