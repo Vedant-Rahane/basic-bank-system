@@ -7,7 +7,7 @@ function Footer() {
     <footer id="footer">
       <div className="container-fluid">
         <p>&copy; {year} Copyright TSF Bank Ltd.</p>
-        <p>Made with ❤️ by Vedant Rahane.</p>
+        <p>Made by Vedant Rahane.</p>
       </div>
     </footer>
   );
