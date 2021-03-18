@@ -73,6 +73,7 @@ function UserDetail({ match }) {
     transferCon.setAttribute("class", "collapse");
   }
 
+  //To hide Transaction history card
   function hideTransaction() {
     setShowTrasactionsText(true);
     const transactionCon = document.querySelector("#collapseTransaction");
@@ -127,20 +128,21 @@ function UserDetail({ match }) {
   // To update user in backend by making patch request
 
   const transferMoney = async () => {
-    await api.updateUser(user._id, transaction)
-          .then((res) => {
-            setTransaction({
-              receiverId: "",
-              receiverAccountNo: "",
-              amount: "",
-              receiverName: "",
-              senderCurrentBalance: "",
-            });
-            fetchUser();
-          })
-          .catch((err) => {
-            console.log("CATCH = ", err);
-          });
+    await api
+      .updateUser(user._id, transaction)
+      .then((res) => {
+        setTransaction({
+          receiverId: "",
+          receiverAccountNo: "",
+          amount: "",
+          receiverName: "",
+          senderCurrentBalance: "",
+        });
+        fetchUser();
+      })
+      .catch((err) => {
+        console.log("CATCH = ", err);
+      });
   };
 
   function cancelTransfer() {
@@ -164,7 +166,7 @@ function UserDetail({ match }) {
       console.log(transaction);
       loadingAnimation();
       transferMoney();
-      
+
       setTimeout(() => {
         topScroll();
         hideTransfer();

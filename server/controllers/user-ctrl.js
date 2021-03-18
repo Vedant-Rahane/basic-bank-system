@@ -77,7 +77,7 @@ updateUser = async (req, res) => {
         body.receiverName +
         " / Account No. :" +
         body.receiverAccountNo,
-      date: new Date().toLocaleString(),
+      date: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
     });
 
     user.accountHistory = sendersTransactions;
@@ -130,7 +130,9 @@ updateUser = async (req, res) => {
             senderDetail.name +
             " / Account No. :" +
             senderDetail.accNo,
-          date: new Date().toLocaleString(),
+          date: new Date().toLocaleString("en-IN", {
+            timeZone: "Asia/Kolkata",
+          }),
         });
   
         user.accountHistory = receiversTransactions;

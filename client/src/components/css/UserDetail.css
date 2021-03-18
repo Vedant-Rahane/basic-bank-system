@@ -175,7 +175,6 @@
       width: 90vw;
       padding: 0;
       margin: 25px 20px;
-      /* margin-bottom: 25px; */
     }
 
     .user-detail {
@@ -188,7 +187,6 @@
 
     #alertMsg {
       padding: 0.6rem 1rem;
-      display: none;
     }
 
     .top-container {
@@ -207,7 +205,6 @@
 
     .card-container {
       margin: 0;
-      /* padding: 20px 0; */
     }
 
     .user-container-btn {
