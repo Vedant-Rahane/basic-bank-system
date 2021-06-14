@@ -48,11 +48,11 @@ function Clock() {
 
     document.getElementById("day").innerHTML = `${days[day]},`;
 
-      document.getElementById("date").innerHTML = `${date} ${months[mo]} ${yr}`;
+    document.getElementById("date").innerHTML = `${date} ${months[mo]} ${yr}`;
 
-      document.getElementById("time").innerHTML = `${hou.pad(2)} : ${min.pad(
-        2
-      )} : ${sec.pad(2)} ${ampm}`;
+    document.getElementById("time").innerHTML = `${hou.pad(2)} : ${min.pad(
+      2
+    )} : ${sec.pad(2)} ${ampm}`;
   }
 
   function initClock() {
@@ -66,7 +66,9 @@ function Clock() {
     <div id="timedate">
       <span id="day"></span>
       <span id="date"></span>
+      <br />
       <span id="time"></span>
+      <span id="ampm"></span>
     </div>
   );
 }

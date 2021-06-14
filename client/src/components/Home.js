@@ -16,25 +16,41 @@ function homeContent() {
         <div className="home-right-container">
           <div className="home-btn-container">
             <i className="icon fas fa-user-plus"></i>
-            <Button href="#" variant="outline-primary">
+            <Button href="#" className="home-btn" variant="outline-primary">
               Create User
             </Button>{" "}
           </div>
           <div className="home-btn-container">
             <i className="icon fas fa-users"></i>
-            <Button href="/users" variant="outline-primary">
+            <Button
+
+
+
+                                                     href="/users"
+             
+             
+             
+              className="home-btn"
+             
+             
+             
+              variant="outline-primary"
+            
+            
+            
+            >
               View All Users
             </Button>{" "}
           </div>
           <div className="home-btn-container">
             <i className="icon fas fa-user-edit"></i>
-            <Button href="#" variant="outline-primary">
+            <Button href="#" className="home-btn" variant="outline-primary">
               Edit User
             </Button>{" "}
           </div>
           <div className="home-btn-container">
             <i className="icon fas fa-user-slash"></i>
-            <Button href="#" variant="outline-primary">
+            <Button href="#" className="home-btn" variant="outline-primary">
               Delete User
             </Button>{" "}
           </div>

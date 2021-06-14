@@ -1,7 +1,8 @@
 import axios from "axios";
+require("dotenv").config();
 
 const api = axios.create({
-  baseURL: "https://basic-bank-system-project.herokuapp.com/api",
+  baseURL: "http://localhost:3000/api",
 });
 
 export const getAllUsers = () => api.get(`/users`);

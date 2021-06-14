@@ -29,6 +29,19 @@
     justify-content: left;
     align-items: center;
   }
+
+  .home-btn {
+    color: #009879;
+    background-color: transparent;
+    background-image: none;
+    border-color: #009879;
+}
+
+.home-btn:hover {
+    color: #222;
+    background-color: #66C1AE;
+    border-color: #66C1AE;
+}
   
   @media (max-width:768px) {
     .home-left-container {
