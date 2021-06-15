@@ -1,0 +1,341 @@
+
+#alertMsg {
+    margin-bottom: 0.5rem;
+    visibility: hidden;
+  }
+
+.user-detail-container {
+    min-height: 100vh;
+    place-items: center;
+  }
+  
+  .section {
+    width: 90vw;
+    margin: 0 auto;
+    max-width: 1170px;
+  }
+  
+  .title {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .underline {
+    height: 0.25rem;
+    width: 5rem;
+    background: hsl(205, 78%, 60%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .container {
+    width: 80vw;
+    max-width: 800px;
+    margin-bottom: 50px;
+  }
+
+  .top-container {
+    justify-content: center; 
+    align-items: center; 
+    margin: 10px;
+    margin-bottom: 30px;
+  }
+
+  @media (min-width: 580px) and (max-width: 768px) {
+
+    .person-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    }
+
+    .top-container .card-container {
+      margin-top: 40px;
+      padding-left: 15px;
+    }
+
+  }
+
+  .img-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  }
+
+  .card-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  }
+  
+  .person-img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 50%;
+    z-index: 1000;
+  }
+
+  .user-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    padding: 1.5rem 2rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s linear;
+  }
+
+  .user-detail:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+
+  .user-table {
+    text-align: left;
+  }
+
+  .user-table td:first-child {
+    font-weight: 700;
+    color: #009879;
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .user-container-btn {
+    margin: 0.5rem 3rem;
+    background: hsl(205, 100%, 96%);
+    color: hsl(205, 78%, 60%);
+    padding: 0.25rem 0.5rem;
+    text-transform: capitalize;
+    border-radius: 0.25rem;
+    transition: all 0.3s linear;
+    border-color: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+  .user-container-btn:hover {
+    background: hsl(205, 78%, 60%);
+    color: hsl(205, 86%, 17%);
+  } 
+  
+  #collapseTransfer {  
+    max-width: 500px;
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    border-radius: 0.25rem;
+    border: 2px solid #00ff99;
+    transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
+  }
+
+  #collapseTransfer:hover {
+    padding-left: 12px;
+    border-left: 10px solid #00ff99;
+  }
+
+  #collapseTransaction {
+    margin: 30px 0;
+    padding: 10px;
+    border-collapse: collapse;
+  }
+
+  #collapseTransaction tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  
+  #collapseTransaction tbody tr:last-of-type {
+    border-bottom: 2px solid #abf1e3;
+  }
+
+  .transfer-form {
+    text-align: left;
+  }
+
+  .transfer-btn {
+    margin-top: 20px;
+    border: 0;
+  }
+
+  @media (max-width:580px) {
+
+    .user-detail-container {
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 90vw;
+      padding: 0;
+      margin: 25px 20px;
+    }
+
+    .user-detail {
+      padding: 1.5rem 1rem;
+    }
+
+    .title {
+      margin: 1rem 0;
+    }
+
+    #alertMsg {
+      padding: 0.6rem 1rem;
+    }
+
+    .top-container {
+      margin: 0;
+    }
+
+    .img-container {
+      padding: 0;
+    }
+
+    .person-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      }
+
+    .card-container {
+      margin: 0;
+    }
+
+    .user-container-btn {
+      margin: 0.5rem 1rem;
+    }
+
+  }
+
+    /* ---------------Loading Animation --------------- */
+
+  .spanner{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: #2a2a2a55;
+    width: 100vw;
+    height: 100%;
+    text-align:center;
+    color: #FFF;
+    z-index: 1000;
+    display: none;
+  }
+
+  .spanner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);}
+  
+  
+  .overlay{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 500;
+    display: none;
+  }
+  
+  .loader,
+  .loader:before,
+  .loader:after {
+    border-radius: 50%;
+    width: 2.5em;
+    height: 2.5em;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation: load7 1.8s infinite ease-in-out;
+    animation: load7 1.8s infinite ease-in-out;
+  }
+  .loader {
+    color: #ffffff;
+    font-size: 10px;
+    margin: 80px auto;
+    position: relative;
+    text-indent: -9999em;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+  }
+  .loader:before,
+  .loader:after {
+    content: '';
+    position: absolute;
+    top: 0;
+  }
+  .loader:before {
+    left: -3.5em;
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+  }
+  .loader:after {
+    left: 3.5em;
+  }
+  @-webkit-keyframes load7 {
+    0%,
+    80%,
+    100% {
+      box-shadow: 0 2.5em 0 -1.3em;
+    }
+    40% {
+      box-shadow: 0 2.5em 0 0;
+    }
+  }
+  @keyframes load7 {
+    0%,
+    80%,
+    100% {
+      box-shadow: 0 2.5em 0 -1.3em;
+    }
+    40% {
+      box-shadow: 0 2.5em 0 0;
+    }
+  }
+  
+  .show{
+    display: block;
+  }
+
+  .spanner, .overlay{
+    opacity: 0;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+  
+  .spanner.show, .overlay.show {
+    opacity: 1
+  }
+
+
+  /* ---------Transaction Fail Error--------- */
+
+  .notifError {
+    display: block;
+    background-color: #f39c81d9;
+    color: #fffdfa;
+    border-radius: 0.5rem;
+    border: 1px solid #78201B;
+    padding: 1rem; 
+  }
+  
+  .inlineForm__notif {
+      height: 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center; 
+      margin-bottom: 20px;
+  }

@@ -1,0 +1,21 @@
+#timedate {
+    font: small-caps lighter 40px/150% "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    text-align:left;
+    color:#000;
+    width: 100%;
+    border-left: 3px solid #ed1f24;
+    padding: 20px;
+  }
+
+  #day, #date, #time {
+      display: inline-block;
+      font-size: 3rem;
+  }
+
+  @media (max-width: 635px) {
+    
+    #day, #date, #time {
+      font-size: 2.3rem;
+    }
+    
+  }

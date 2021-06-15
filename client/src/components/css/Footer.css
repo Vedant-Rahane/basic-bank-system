@@ -1,0 +1,10 @@
+
+#footer .container-fluid{
+    padding: 12px 50px;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+    color: #ccc;
+}
